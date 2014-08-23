@@ -3,7 +3,6 @@ require "sunlight/congress"
 require "erb"
 Sunlight::Congress.api_key = "e179a6973728c4dd3fb1204283aaccb5"
 
-puts Dir.pwd
 
 
 def clean_zipcode(zipcode)
@@ -19,7 +18,6 @@ def clean_phone(phone)
 	end
 	phone
 end
-
 
 
 def legislators_by_zipcode(zipcode)
@@ -39,7 +37,7 @@ end
 
 puts "EventManagement Initialized!"
 
-contents = CSV.open "/Users/davron/Sites/event_manager/event_attendees.csv", headers: true, header_converters: :symbol
+contents = CSV.open "event_attendees.csv", headers: true, header_converters: :symbol
 
 template_letter = File.read "form_letter.erb"
 erb_template = ERB.new template_letter
@@ -75,7 +73,13 @@ end
 puts ""
 puts "#########################################" 
 puts "The most active hour of the day is:"
-puts regtime_array.max
+
+if regtime_array.max > 12
+	puts (regtime_array.max % 12).to_s + "pm"
+else
+	puts regtime_array.max + "am"
+end
+
 
 puts ""
 puts "#########################################" 
@@ -97,7 +101,7 @@ elsif regday_array.max == 7
 else
 	puts "Something must be wrong with the way we're extracting week days..."
 end
-
+puts ""
 		
 		
 		
